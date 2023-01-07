@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  postgres-source:
+    image: 'bitnami/postgresql:latest'
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    container_name: 'postgres-source-db'
+
+  postgres-sink:
+    image: 'bitnami/postgresql:latest'
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    container_name: 'postgres-sink-db'
+
+  upstream-app:
+    build: ./upstream-application/
+    container_name: upstream-app
+    environment:
+      SERVER_PORT: 8010
+      DB_HOST: postgres-source
+      DB_PORT: 5432
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      DB_DRIVER: org.postgresql.Driver
+    ports:
+      - "8010:8010"
+
+  downstream-app:
+    build: ./downstream-application/
+    container_name: downstream-app
+    environment:
+      SERVER_PORT: 8002
+      DB_HOST: postgres-sink
+      DB_PORT: 5432
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      DB_DRIVER: org.postgresql.Driver
+    ports:
+      - "8002:8002"
+

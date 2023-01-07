@@ -4,7 +4,7 @@ COPY . .
 RUN mvn clean package -Dmaven.test.skip=true
 
 FROM openjdk:11
-COPY --from=builder /target/skillassessment-0.0.1-SNAPSHOT.jar /app/skillassessment-0.0.1-SNAPSHOT.jar
+COPY --from=builder /target/upstream-application-0.0.1-SNAPSHOT.jar /app/upstream-application-0.0.1-SNAPSHOT.jar
 WORKDIR /app
 
-CMD ["java", "-jar", "skillassessment-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "upstream-application-0.0.1-SNAPSHOT.jar"]
