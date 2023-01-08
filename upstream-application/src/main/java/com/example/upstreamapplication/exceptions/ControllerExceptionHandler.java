@@ -1,4 +1,4 @@
-package com.example.schematenancy.exception;
+package com.example.upstreamapplication.exceptions;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,4 +1,4 @@
-package com.example.schematenancy.exception;
+package com.example.upstreamapplication.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
