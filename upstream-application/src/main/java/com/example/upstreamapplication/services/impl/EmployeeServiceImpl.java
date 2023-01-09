@@ -1,5 +1,6 @@
 package com.example.upstreamapplication.services.impl;
 
+import com.example.upstreamapplication.dtos.EmployeeCreateRequestDto;
 import com.example.upstreamapplication.exceptions.ItemNotFoundException;
 import com.example.upstreamapplication.models.Employee;
 import com.example.upstreamapplication.repositories.EmployeeRepository;
@@ -27,5 +28,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmployeeById(UUID employeeId) {
         return employeeRepository.findById(employeeId)
                 .orElseThrow(()-> new ItemNotFoundException("Employee Not Found", null, null, HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public Employee createEmployee(EmployeeCreateRequestDto employee) {
+        return employeeRepository.save(Employee.builder()
+                        .employeeId(UUID.randomUUID())
+                        .employeeFirstName(employee.getEmployeeFirstName())
+                        .employeeLastName(employee.getEmployeeLastName())
+                        .age(employee.getAge())
+                        .positionTitle(employee.getPositionTitle())
+                        .build());
     }
 }
