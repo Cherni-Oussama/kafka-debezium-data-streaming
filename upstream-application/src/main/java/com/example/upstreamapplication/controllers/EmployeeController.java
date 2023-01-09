@@ -1,12 +1,15 @@
 package com.example.upstreamapplication.controllers;
 
 
+import com.example.upstreamapplication.dtos.EmployeeCreateRequestDto;
 import com.example.upstreamapplication.models.Employee;
 import com.example.upstreamapplication.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,5 +30,10 @@ public class EmployeeController {
     @GetMapping("/{employeeId}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable("employeeId") UUID employeeId){
         return ResponseEntity.ok(employeeService.getEmployeeById(employeeId));
+    }
+
+    @PostMapping()
+    public ResponseEntity<Employee> addEmployee(@RequestBody EmployeeCreateRequestDto employee){
+        return ResponseEntity.ok(employeeService.createEmployee(employee));
     }
 }
