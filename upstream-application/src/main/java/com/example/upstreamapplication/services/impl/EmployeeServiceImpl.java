@@ -40,4 +40,12 @@ public class EmployeeServiceImpl implements EmployeeService {
                         .positionTitle(employee.getPositionTitle())
                         .build());
     }
+
+    @Override
+    public Employee deleteEmployeeById(UUID employeeId) {
+        var employee = employeeRepository.findById(employeeId)
+                .orElseThrow(()-> new ItemNotFoundException("Employee Not Found", null, null, HttpStatus.NOT_FOUND));
+        employeeRepository.deleteById(employeeId);
+        return employee;
+    }
 }

@@ -13,4 +13,6 @@ public interface EmployeeService {
     Employee getEmployeeById(UUID employeeId);
 
     Employee createEmployee(EmployeeCreateRequestDto employee);
+
+    Employee deleteEmployeeById(UUID employeeId);
 }
