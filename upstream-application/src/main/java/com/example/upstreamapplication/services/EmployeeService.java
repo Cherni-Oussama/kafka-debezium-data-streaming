@@ -1,7 +1,7 @@
 package com.example.upstreamapplication.services;
 
 import com.example.upstreamapplication.dtos.EmployeeCreateRequestDto;
-import com.example.upstreamapplication.models.Employee;
+import com.example.upstreamapplication.models.entities.Employee;
 
 import java.util.List;
 import java.util.UUID;

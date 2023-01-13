@@ -1,4 +1,4 @@
-package com.example.upstreamapplication.models;
+package com.example.upstreamapplication.models.entities;
 
 
 import lombok.AllArgsConstructor;

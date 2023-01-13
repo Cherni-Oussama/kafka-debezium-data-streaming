@@ -2,7 +2,7 @@ package com.example.upstreamapplication.services.impl;
 
 import com.example.upstreamapplication.dtos.EmployeeCreateRequestDto;
 import com.example.upstreamapplication.exceptions.ItemNotFoundException;
-import com.example.upstreamapplication.models.Employee;
+import com.example.upstreamapplication.models.entities.Employee;
 import com.example.upstreamapplication.repositories.EmployeeRepository;
 import com.example.upstreamapplication.services.EmployeeService;
 import lombok.RequiredArgsConstructor;

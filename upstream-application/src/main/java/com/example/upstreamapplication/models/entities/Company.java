@@ -1,6 +1,7 @@
-package com.example.upstreamapplication.models;
+package com.example.upstreamapplication.models.entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Company {
 
     @Id

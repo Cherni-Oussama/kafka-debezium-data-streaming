@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 
 @Data
-public class CreateAndUpdateCompanyDTO {
+public class CompanyDTO {
 
     private String companyName;
 
