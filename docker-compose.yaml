@@ -2,17 +2,18 @@ version: '3'
 
 services:
   postgres-source:
-    image: 'bitnami/postgresql:latest'
+    image: debezium/postgres:11
     ports:
       - "5432:5432"
     environment:
+      - POSTGRES_REPLICATION_MODE=logical
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=postgres
     container_name: 'postgres-source-db'
 
   postgres-sink:
-    image: 'bitnami/postgresql:latest'
+    image: debezium/postgres:11
     ports:
       - "5433:5432"
     environment:
@@ -111,3 +112,17 @@ services:
       DBZ_NAME: postgres
       DBZ_USER: postgres
       DBZ_PASSWORD: password
+
+
+  kafka-connect-ui:
+    image: landoop/kafka-connect-ui:0.9.7
+    container_name: kafka-connect-ui
+    restart: unless-stopped
+    ports:
+      - "8086:8000"
+    environment:
+      CONNECT_URL: http://connectors:8083
+      PROXY: "true"
+    healthcheck:
+      test: "wget --quiet --tries=1 --spider http://localhost:8000 || exit 1"
+
