@@ -80,9 +80,9 @@ services:
       test: [ "CMD", "nc", "-z", "localhost", "9092" ]
 
 
-  debezium:
-    build: ./debezium-connectors/
-    container_name: debezium-connectors
+  connectors:
+    build: ./DebeziumConnector/
+    container_name: connectors
     ports:
       - "8083:8083"
     environment:
@@ -104,12 +104,10 @@ services:
       CONNECT_LOG4J_LOGGERS: "org.apache.kafka.connect.runtime.rest=WARN,org.reflections=ERROR"
       CONNECT_PLUGIN_PATH: "/usr/share/java"
       KAFKA_URL: kafka:9092
-      CONNECT_URL: debezium-connectors:8083
+      CONNECT_URL: connectors:8083
       DBZ_CONNECTOR_CLASS: "io.debezium.connector.postgresql.PostgresConnector"
-      DBZ_HOST: postgresql
+      DBZ_HOST: postgres-source
       DBZ_PORT: 5432
       DBZ_NAME: postgres
       DBZ_USER: postgres
       DBZ_PASSWORD: password
-
-
