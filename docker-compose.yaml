@@ -1,0 +1,128 @@
+version: '3'
+
+services:
+  postgres-source:
+    image: debezium/postgres:11
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_REPLICATION_MODE=logical
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    container_name: 'postgres-source-db'
+
+  postgres-sink:
+    image: debezium/postgres:11
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    container_name: 'postgres-sink-db'
+
+  upstream-app:
+    build: ./upstream-application/
+    container_name: upstream-app
+    environment:
+      SERVER_PORT: 8010
+      DB_HOST: postgres-source
+      DB_PORT: 5432
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      DB_DRIVER: org.postgresql.Driver
+    ports:
+      - "8010:8010"
+
+  downstream-app:
+    build: ./downstream-application/
+    container_name: downstream-app
+    environment:
+      SERVER_PORT: 8002
+      DB_HOST: postgres-sink
+      DB_PORT: 5432
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      DB_DRIVER: org.postgresql.Driver
+    ports:
+      - "8002:8002"
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.0.1
+    container_name: zookeeper
+    restart: unless-stopped
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    healthcheck:
+      test: "echo stat | nc localhost $$ZOOKEEPER_CLIENT_PORT"
+
+  kafka:
+    image: confluentinc/cp-kafka:7.0.1
+    container_name: kafka
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "9092" ]
+
+
+  connectors:
+    build: ./DebeziumConnector/
+    container_name: connectors
+    ports:
+      - "8083:8083"
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: kafka:9092
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: compose-connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
+      CONNECT_OFFSET_STORAGE_PARTITIONS: 3
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
+      CONNECT_STATUS_STORAGE_PARTITIONS: 3
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
+      CONNECT_LOG4J_ROOT_LOGLEVEL: INFO
+      CONNECT_LOG4J_LOGGERS: "org.apache.kafka.connect.runtime.rest=WARN,org.reflections=ERROR"
+      CONNECT_PLUGIN_PATH: "/usr/share/java"
+      KAFKA_URL: kafka:9092
+      CONNECT_URL: connectors:8083
+      DBZ_CONNECTOR_CLASS: "io.debezium.connector.postgresql.PostgresConnector"
+      DBZ_HOST: postgres-source
+      DBZ_PORT: 5432
+      DBZ_NAME: postgres
+      DBZ_USER: postgres
+      DBZ_PASSWORD: password
+
+
+  kafka-connect-ui:
+    image: landoop/kafka-connect-ui:0.9.7
+    container_name: kafka-connect-ui
+    restart: unless-stopped
+    ports:
+      - "8086:8000"
+    environment:
+      CONNECT_URL: http://connectors:8083
+      PROXY: "true"
+    healthcheck:
+      test: "wget --quiet --tries=1 --spider http://localhost:8000 || exit 1"
+

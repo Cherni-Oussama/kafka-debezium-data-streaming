@@ -1,0 +1,12 @@
+server:
+  port: ${SERVER_PORT:8002}
+
+spring:
+  datasource:
+    driver-class-name: ${DB_DRIVER:org.postgresql.Driver}
+    host: ${DB_HOST:localhost}
+    port: ${DB_PORT:5433}
+    name: ${POSTGRES_DB:postgres}
+    url: jdbc:postgresql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.name}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:password}
