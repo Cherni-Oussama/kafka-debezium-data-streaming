@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("api/v1/companies")
 public class CompanyController {
 
     private final CompanyService companyService;
@@ -33,7 +33,7 @@ public class CompanyController {
     }
 
     @GetMapping("{companyId}")
-    private ResponseEntity<Company> getCOmpanyById(@PathVariable("companyId") UUID companyId){
+    private ResponseEntity<Company> getCompanyById(@PathVariable("companyId") UUID companyId){
         return ResponseEntity.ok(companyService.getCompanyById(companyId));
     }
 }

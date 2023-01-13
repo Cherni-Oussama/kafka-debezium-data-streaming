@@ -10,3 +10,11 @@ spring:
     url: jdbc:postgresql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.name}
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:password}
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      show-sql: 'true'
+      ddl-auto: update
