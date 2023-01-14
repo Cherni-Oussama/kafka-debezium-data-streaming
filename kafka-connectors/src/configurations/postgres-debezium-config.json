@@ -7,6 +7,6 @@
     "database.user": "postgres",
     "database.password": "password",
     "database.dbname" : "postgres",
-    "topic.prefix": "topic-"
+    "topic.prefix": "topic"
   }
 }
