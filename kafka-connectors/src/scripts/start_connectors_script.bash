@@ -15,6 +15,6 @@ echo -e $(date) " Kafka Connect listener HTTP state: " $$curl_status " (waiting 
 done
 
 echo -e "\n--\n+> Creating source connector"
-curl -i -X POST localhost:8083/connectors -H 'Content-Type: application/json' -d @configurations/postgres-debezium-config.json
+curl -i -X POST localhost:8083/connectors -H 'Content-Type: application/json' -d @src/configurations/postgres-debezium-config.json
 
 sleep infinity
