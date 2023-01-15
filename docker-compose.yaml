@@ -82,7 +82,7 @@ services:
 
 
   connectors:
-    build: ./DebeziumConnector/
+    build: ./kafka-connectors/
     container_name: connectors
     ports:
       - "8083:8083"
@@ -112,17 +112,4 @@ services:
       DBZ_NAME: postgres
       DBZ_USER: postgres
       DBZ_PASSWORD: password
-
-
-  kafka-connect-ui:
-    image: landoop/kafka-connect-ui:0.9.7
-    container_name: kafka-connect-ui
-    restart: unless-stopped
-    ports:
-      - "8086:8000"
-    environment:
-      CONNECT_URL: http://connectors:8083
-      PROXY: "true"
-    healthcheck:
-      test: "wget --quiet --tries=1 --spider http://localhost:8000 || exit 1"
 
