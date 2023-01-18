@@ -13,4 +13,4 @@ RUN wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/
 && tar -xvzf /tmp/debezium-connector-postgres.tar.gz --directory /usr/share/java/ \
 && rm /tmp/debezium-connector-postgres.tar.gz
 
-CMD ["bash","-c","/src/scripts/start_connectors_script.bash"]
+CMD ["bash","-c","/src/scripts/start_connectors_script.bash ${DBZ_CONNECTOR_CLASS} ${DBZ_HOST} ${DBZ_PORT} ${DBZ_USER} ${DBZ_PASSWORD} ${DBZ_NAME} ${TOPIC_PREFIX} ${CONNECT_PORT}"]

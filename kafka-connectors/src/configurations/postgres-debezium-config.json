@@ -1,12 +1,13 @@
+
 {
   "name": "debezium-postgres-connector",
   "config": {
-    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-    "database.hostname": "postgres-source",
-    "database.port": "5432",
-    "database.user": "postgres",
-    "database.password": "password",
-    "database.dbname" : "postgres",
-    "topic.prefix": "topic"
+    "connector.class": "DBZ_CONNECTOR_CLASS",
+    "database.hostname": "DBZ_HOST",
+    "database.port": "DBZ_PORT",
+    "database.user": "DBZ_USER",
+    "database.password": "DBZ_PASSWORD",
+    "database.dbname" : "DBZ_NAME",
+    "topic.prefix": "TOPIC_PREFIX"
   }
 }
