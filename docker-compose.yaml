@@ -112,6 +112,7 @@ services:
       DBZ_NAME: postgres
       DBZ_USER: postgres
       DBZ_PASSWORD: password
+      TOPIC_PREFIX: CDC
 
   kafka-connect-ui:
     image: landoop/kafka-connect-ui:0.9.7
