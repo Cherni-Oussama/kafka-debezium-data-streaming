@@ -15,11 +15,12 @@ services:
   postgres-sink:
     image: debezium/postgres:11
     ports:
-      - "5433:5432"
+      - "5433:5433"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=postgres
+    command: -p 5433
     container_name: 'postgres-sink-db'
 
   upstream-app:
@@ -42,7 +43,7 @@ services:
     environment:
       SERVER_PORT: 8002
       DB_HOST: postgres-sink
-      DB_PORT: 5432
+      DB_PORT: 5433
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
