@@ -8,6 +8,8 @@
     "database.user": "DBZ_USER",
     "database.password": "DBZ_PASSWORD",
     "database.dbname" : "DBZ_NAME",
-    "topic.prefix": "TOPIC_PREFIX"
+    "topic.prefix": "TOPIC_PREFIX",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter"
   }
 }
