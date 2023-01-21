@@ -13,6 +13,10 @@ RUN wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/
 && tar -xvzf /tmp/debezium-connector-postgres.tar.gz --directory /usr/share/java/ \
 && rm /tmp/debezium-connector-postgres.tar.gz
 
+RUN wget https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-jdbc/versions/10.6.3/confluentinc-kafka-connect-jdbc-10.6.3.zip -O /tmp/confluentinc-kafka-connect-jdbc.zip \
+&& unzip /tmp/confluentinc-kafka-connect-jdbc.zip -d /usr/share/java/ \
+&& rm /tmp/confluentinc-kafka-connect-jdbc.zip
+
 CMD ["bash","-c","/src/scripts/start_connectors_script.bash \
  CONNECT_PORT=${CONNECT_PORT} \
  DBZ_CONNECTOR_CLASS=${DBZ_CONNECTOR_CLASS} \

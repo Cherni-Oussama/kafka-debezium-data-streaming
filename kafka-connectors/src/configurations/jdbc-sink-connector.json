@@ -1,14 +1,20 @@
 {
   "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-  "connection.url": "jdbc:postgresql://postgres-sink:5433/postgres" ,
-  "connection.password": "postgres",
-  "connection.user": "password",
+  "connection.url": "jdbc:postgresql://postgres-sink:5433/postgres",
+  "connection.user": "postgres",
+  "connection.password": "password",
   "tasks.max": "1",
-  "topics": "streams_words_topic0",
-  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "topics": "CDC.public.employee,CDC.public.company",
+  "transforms": "unwrap,changeTopicName",
+  "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+  "transforms.changeTopicName.replacement": "$1",
+  "transforms.changeTopicName.type": "org.apache.kafka.connect.transforms.RegexRouter",
+  "transforms.changeTopicName.regex": "1.public.(.*)",
+  "transforms.unwrap.drop.tombstones": "false",
   "key.converter.schemas.enable": "false",
   "auto.evolve": "true",
   "auto.create": "true",
-  "errors.tolerance": "all"
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter"
+
 }
