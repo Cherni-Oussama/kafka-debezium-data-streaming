@@ -17,10 +17,10 @@ services:
     ports:
       - "5433:5433"
     environment:
+      - PGPORT=5433
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=postgres
-    command: -p 5433
     container_name: 'postgres-sink-db'
 
   upstream-app:
