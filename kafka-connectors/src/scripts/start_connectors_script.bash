@@ -38,4 +38,5 @@ cat src/configurations/postgres-debezium-config.json
 
 echo -e "\033[1;32m Creating source connector \033[m"
 curl -i -X POST localhost:"${hashmap["CONNECT_PORT"]}"/connectors -H 'Content-Type: application/json' -d @src/configurations/postgres-debezium-config.json
+curl -i -X POST localhost:"${hashmap["CONNECT_PORT"]}"/connectors -H 'Content-Type: application/json' -d @src/configurations/postgres-debezium-config.json
 sleep infinity
