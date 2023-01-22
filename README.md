@@ -67,6 +67,10 @@ These instructions will get you a copy of the project up and running on your loc
 - `CDC-AVRO_CONVERTER` branch: Demonstrates the use of Avro converter for data streaming.
 
 ### Installation
+<div align="center">
+  <a href="[https://github.com/Cherni-Oussama/CDC-DEBEZIUM](https://github.com/Cherni-Oussama/CDC-DEBEZIUM)">
+      <img src="images/Emulator-install.gif" alt="installation-gif" width="500" height="230">
+</div>
 
 1. Clone the repository.
 
