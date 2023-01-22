@@ -4,7 +4,7 @@
   "connection.user": "postgres",
   "connection.password": "password",
   "tasks.max": "1",
-  "topics": "CDC.public.employee,CDC.public.company",
+  "topics": "CDC-AVRO.public.employee,CDC-AVRO.public.company",
   "transforms": "unwrap,changeTopicName",
   "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
   "transforms.changeTopicName.replacement": "$1",
@@ -13,8 +13,5 @@
   "transforms.unwrap.drop.tombstones": "false",
   "key.converter.schemas.enable": "false",
   "auto.evolve": "true",
-  "auto.create": "true",
-  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-  "key.converter": "org.apache.kafka.connect.storage.StringConverter"
-
+  "auto.create": "true"
 }
