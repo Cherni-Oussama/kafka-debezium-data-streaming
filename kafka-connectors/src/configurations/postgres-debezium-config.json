@@ -1,6 +1,6 @@
 
 {
-  "name": "debezium-postgres-connector",
+  "name": "debezium-postgres-connector-with-avro-config",
   "config": {
     "connector.class": "DBZ_CONNECTOR_CLASS",
     "database.hostname": "DBZ_HOST",
@@ -8,8 +8,6 @@
     "database.user": "DBZ_USER",
     "database.password": "DBZ_PASSWORD",
     "database.dbname" : "DBZ_NAME",
-    "topic.prefix": "TOPIC_PREFIX",
-    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-    "key.converter": "org.apache.kafka.connect.json.JsonConverter"
+    "topic.prefix": "TOPIC_PREFIX"
   }
 }
