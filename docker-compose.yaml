@@ -2,15 +2,33 @@ version: '3'
 
 services:
   mongo-source-db:
-    image: mongo:latest
+    image: bitnami/mongodb:latest
     container_name: mongo-source-db
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_DATABASE: upstream_db
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_NAME: rs0
+      MONGODB_ADVERTISED_HOSTNAME: mongo-source-db
+      MONGODB_ROOT_PASSWORD: password
+      MONGODB_REPLICA_SET_KEY: replicasetkey123
     restart: always
+
+  mongo-source-replica:
+    container_name: "mongo-replica"
+    image: bitnami/mongodb:latest
+    ports:
+      - "27018:27017"
+    environment:
+      MONGODB_REPLICA_SET_MODE: secondary
+      MONGODB_REPLICA_SET_NAME: rs0
+      MONGODB_ADVERTISED_HOSTNAME: mongo-source-replica
+      MONGODB_PRIMARY_HOST: mongo-source-db
+      MONGODB_PRIMARY_PORT_NUMBER: 27017
+      MONGODB_PRIMARY_ROOT_PASSWORD: password
+      MONGODB_REPLICA_SET_KEY: replicasetkey123
+    restart: always
+
 
   mongo-express:
     image: mongo-express:latest
@@ -22,7 +40,7 @@ services:
       ME_CONFIG_MONGODB_SERVER: mongo-source-db
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
 
 
   postgres-sink:
@@ -41,12 +59,10 @@ services:
     container_name: upstream-app
     environment:
       SERVER_PORT: 8010
-      DB_HOST: postgres-source
-      DB_PORT: 5432
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      DB_DRIVER: org.postgresql.Driver
+      MONGO_USER: root
+      MONGO_PASSWORD: password
+      MONGO_HOST: mongo-source-db
+      MONGO_PORT: 27017
     ports:
       - "8010:8010"
 

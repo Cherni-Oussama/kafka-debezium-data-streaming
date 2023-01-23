@@ -12,7 +12,7 @@ do
 done
 echo -e "\033[1;32m ${#hashmap[@]} parameters received \033[m"
 
-echo -e "\033[38;5;208m Waiting for Kafka Connect to start listening on localhost ⏳ \033[m"
+echo -e "\033[1;33m Waiting for Kafka Connect to start listening on localhost ⏳ \033[m"
 
 while :; do
 # shellcheck disable=SC1083
@@ -28,15 +28,6 @@ done
 
 echo -e "\033[1;32m Verifying if all required parameters are available  \033[m"
 
-DEBEZIUM_JOB_PARAMETERS=("DBZ_CONNECTOR_CLASS" "DBZ_HOST" "DBZ_PORT" "DBZ_USER" "DBZ_PASSWORD" "DBZ_NAME" "TOPIC_PREFIX")
-for param in "${DEBEZIUM_JOB_PARAMETERS[@]}"
-do
-   sed -i "s/$param/${hashmap[$param]}/" src/configurations/postgres-debezium-config.json
-   echo "${hashmap[$param]}"
-done
-cat src/configurations/postgres-debezium-config.json
-
 echo -e "\033[1;32m Creating source connector \033[m"
-curl -i -X POST localhost:"${hashmap["CONNECT_PORT"]}"/connectors -H 'Content-Type: application/json' -d @src/configurations/postgres-debezium-config.json
-curl -i -X POST localhost:"${hashmap["CONNECT_PORT"]}"/connectors -H 'Content-Type: application/json' -d @src/configurations/postgres-debezium-config.json
+curl -i -X POST localhost:"${hashmap["CONNECT_PORT"]}"/connectors -H 'Content-Type: application/json' -d @src/configurations/mongo-debezium-config.json
 sleep infinity
