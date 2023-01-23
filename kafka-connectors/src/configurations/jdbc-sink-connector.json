@@ -9,7 +9,7 @@
   "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
   "transforms.changeTopicName.replacement": "$1",
   "transforms.changeTopicName.type": "org.apache.kafka.connect.transforms.RegexRouter",
-  "transforms.changeTopicName.regex": "1.public.(.*)",
+  "transforms.changeTopicName.regex": "MONGO-CDC.public.(.*)",
   "transforms.unwrap.drop.tombstones": "false",
   "key.converter.schemas.enable": "false",
   "auto.evolve": "true",

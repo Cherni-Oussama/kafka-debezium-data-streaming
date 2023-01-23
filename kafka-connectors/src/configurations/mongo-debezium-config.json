@@ -1,0 +1,12 @@
+
+{
+  "name": "debezium-mongo-connector",
+    "config": {
+      "connector.class": "io.debezium.connector.mongodb.MongoDbConnector",
+      "mongodb.ssl.enabled": "false",
+      "topic.prefix": "MONGO-CDC",
+      "mongodb.password": "password",
+      "mongodb.user": "root",
+      "mongodb.hosts": "mongo-source-db:27017"
+    }
+}

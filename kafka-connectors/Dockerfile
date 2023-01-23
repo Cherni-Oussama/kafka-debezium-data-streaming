@@ -9,9 +9,9 @@ WORKDIR /
 
 COPY ./src ./src
 
-RUN wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/2.1.1.Final/debezium-connector-postgres-2.1.1.Final-plugin.tar.gz -O /tmp/debezium-connector-postgres.tar.gz \
-&& tar -xvzf /tmp/debezium-connector-postgres.tar.gz --directory /usr/share/java/ \
-&& rm /tmp/debezium-connector-postgres.tar.gz
+RUN wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-mongodb/2.1.1.Final/debezium-connector-mongodb-2.1.1.Final-plugin.tar.gz -O /tmp/debezium-connector-mongodb.tar.gz \
+&& tar -xvzf /tmp/debezium-connector-mongodb.tar.gz --directory /usr/share/java/ \
+&& rm /tmp/debezium-connector-mongodb.tar.gz
 
 RUN wget https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-jdbc/versions/10.6.3/confluentinc-kafka-connect-jdbc-10.6.3.zip -O /tmp/confluentinc-kafka-connect-jdbc.zip \
 && unzip /tmp/confluentinc-kafka-connect-jdbc.zip -d /usr/share/java/ \
