@@ -30,4 +30,5 @@ echo -e "\033[1;32m Verifying if all required parameters are available  \033[m"
 
 echo -e "\033[1;32m Creating source connector \033[m"
 curl -i -X POST localhost:"${hashmap["CONNECT_PORT"]}"/connectors -H 'Content-Type: application/json' -d @src/configurations/mongo-debezium-config.json
+curl -i -X POST localhost:"${hashmap["CONNECT_PORT"]}"/connectors -H 'Content-Type: application/json' -d @src/configurations/mongodb-sink-connector-config.json
 sleep infinity

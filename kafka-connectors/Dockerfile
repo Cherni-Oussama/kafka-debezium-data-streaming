@@ -13,9 +13,9 @@ RUN wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-mongodb/2
 && tar -xvzf /tmp/debezium-connector-mongodb.tar.gz --directory /usr/share/java/ \
 && rm /tmp/debezium-connector-mongodb.tar.gz
 
-RUN wget https://d1i4a15mxbxib1.cloudfront.net/api/plugins/confluentinc/kafka-connect-jdbc/versions/10.6.3/confluentinc-kafka-connect-jdbc-10.6.3.zip -O /tmp/confluentinc-kafka-connect-jdbc.zip \
-&& unzip /tmp/confluentinc-kafka-connect-jdbc.zip -d /usr/share/java/ \
-&& rm /tmp/confluentinc-kafka-connect-jdbc.zip
+RUN wget https://github.com/mongodb/mongo-kafka/releases/download/r1.9.0/mongodb-kafka-connect-mongodb-1.9.0.zip -O /tmp/confluentinc-kafka-connect-mongo.zip \
+&& unzip /tmp/confluentinc-kafka-connect-mongo.zip -d /usr/share/java/ \
+&& rm /tmp/confluentinc-kafka-connect-mongo.zip
 
 CMD ["bash","-c","/src/scripts/start_connectors_script.bash \
  CONNECT_PORT=${CONNECT_PORT} \

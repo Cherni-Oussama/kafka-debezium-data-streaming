@@ -1,0 +1,18 @@
+{
+  "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+
+  "topics": "MONGO-CDC.upstream_db.company, company",
+  "tasks.max": "1",
+  "database": "sink",
+  "connection.uri": "mongodb://root:password@mongo-sink-db",
+
+  "transforms.changeTopicName.regex": "MONGO-CDC.upstream_db.(.*)",
+  "transforms.unwrap.delete.handling.mode": "drop",
+  "transforms": "unwrap,changeTopicName",
+  "transforms.unwrap.add.headers": "op",
+  "transforms.changeTopicName.type": "org.apache.kafka.connect.transforms.RegexRouter",
+  "transforms.unwrap.type": "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState",
+  "transforms.changeTopicName.replacement": "$1",
+  "transforms.unwrap.drop.tombstones": "false"
+
+}
