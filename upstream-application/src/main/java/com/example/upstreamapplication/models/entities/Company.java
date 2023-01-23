@@ -4,16 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
 
-@Entity
+@Document(collation = "CompanyCollection")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,6 +32,5 @@ public class Company {
 
     private String sector;
 
-    @OneToMany
     private Set<Employee> employeeSet;
 }
